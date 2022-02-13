@@ -3,7 +3,11 @@ package in.obvious.nasapicx.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class NASAImage {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class NASAImage implements Comparable<NASAImage>{
 
     @SerializedName("copyright")
     @Expose
@@ -92,5 +96,18 @@ public class NASAImage {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    @Override
+    public int compareTo(NASAImage nasaImage) {
+        try{
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date currentDate = dateFormat.parse(getDate());
+            Date nasaImageDate = dateFormat.parse(nasaImage.getDate());
+            return nasaImageDate.compareTo(currentDate);
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

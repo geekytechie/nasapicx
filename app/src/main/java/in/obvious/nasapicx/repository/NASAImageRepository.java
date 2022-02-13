@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Collections;
 import java.util.List;
 
 import in.obvious.nasapicx.event.OnNASAImagesFailed;
@@ -25,7 +26,8 @@ public class NASAImageRepository {
             @Override
             public void onResponse(Call<List<NASAImage>> call, Response<List<NASAImage>> response) {
                 List<NASAImage> nasaImages = response.body();
-                if(nasaImages!=null){
+                if(nasaImages!=null && nasaImages.size() > 0){
+                    Collections.sort(nasaImages);
                     nasaImagesLiveData.setValue(nasaImages);
                 }
             }
